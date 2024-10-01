@@ -4,4 +4,5 @@ public interface FileSystemComponent {
 
     int getSize();
 
+    void accept(Visitor visitor);
 }

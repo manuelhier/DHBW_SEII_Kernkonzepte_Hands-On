@@ -27,4 +27,9 @@ public class CustomDirectory implements FileSystemComponent {
         }
         return result;
     }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

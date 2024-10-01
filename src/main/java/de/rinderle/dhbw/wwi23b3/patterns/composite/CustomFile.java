@@ -3,6 +3,7 @@ package de.rinderle.dhbw.wwi23b3.patterns.composite;
 public class CustomFile implements FileSystemComponent {
     private String name;
     private int size;
+    
 
     public CustomFile(String name, int size) {
         this.name = name;
@@ -12,5 +13,10 @@ public class CustomFile implements FileSystemComponent {
     @Override
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
