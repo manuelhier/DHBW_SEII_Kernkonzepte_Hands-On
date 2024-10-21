@@ -61,6 +61,11 @@ public class TodosApiImpl implements TodosApi {
         if (removedTodo == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new TodosIdDelete200Response());
+
+        // Manuelle Anpassung der 200 Response Message
+        TodosIdDelete200Response response = new TodosIdDelete200Response();
+        response.setMessage("Todo deleted");
+
+        return ResponseEntity.ok(response);
     }
 }

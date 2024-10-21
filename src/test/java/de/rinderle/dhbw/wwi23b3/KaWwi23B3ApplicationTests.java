@@ -11,8 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import(TestcontainersConfiguration.class)
@@ -71,5 +70,30 @@ class KaWwi23B3ApplicationTests {
         JSONAssert.assertEquals(expectedResponseGet, getResponse, true);
     }
 
+    @Test
+    public void deleteAndGetTodo() throws Exception {
 
+        // Step 3: Delete the created todo item and check the list again
+        MvcResult deleteResult = mockMvc.perform(delete("/todos/" + 1))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String deleteResponse = deleteResult.getResponse().getContentAsString();
+        String expectedResponseDelete = """
+                {
+                  "message": "Todo deleted"
+                }
+                """;
+
+        JSONAssert.assertEquals(expectedResponseDelete, deleteResponse, true);
+
+        MvcResult getAllResult = mockMvc.perform(get("/todos"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String getAllResponse = getAllResult.getResponse().getContentAsString();
+        String expectedResponseGetAll = "[]";
+
+        JSONAssert.assertEquals(expectedResponseGetAll, getAllResponse, true);
+    }
 }
